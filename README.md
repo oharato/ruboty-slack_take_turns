@@ -2,6 +2,10 @@
 
 Ruboty plugin to manage a duty that members in a slack channel take turns on
 
+## Dependencies
+- ruboty
+- ruboty-slack_rtm
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,9 +22,61 @@ Or install it yourself as:
 
     $ gem install ruboty-slack_take_turns
 
+## ENV
+```
+SLACK_TOKEN - Browse Apps > Custom Integrations > Bots > API Token
+ASSIGN_REGEX - e.g. .*http:\/\/example.com\/issues.*
+```
+## Commands
+```
+ruobty /current/ - show who is on duty currently
+ruobty /exclude (?<user_name>.+?)\z/ - make a specified member to not be on duty after this
+ruobty /force (?<user_name>.+?)\z/ - make a specified member to be on duty
+ruobty /members/ - member list in a channel(order by slack-user-id asc)
+ruobty /next/ - pass on a duty to the next member
+/(?<keyword>.*http:\/\/example.com\/issues.*)/m - When a macthed keyword is posted, the bot assigns a person on duty to a task related the keyword.
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+1. check members
+```
+> ruboty members
+oharato, jimmy, ellen, ruboty
+```
+
+2. set the first person on duty
+```
+> ruboty force oharato
+made @oharato to take over a duty
+```
+
+check current status
+```
+> ruboty current
+@oharato is on duty now.
+```
+
+```
+> ruboty members
+[flag]oharato, jimmy, ellen, ruboty
+```
+
+3. post a keyword you set in .env
+```
+> http://example.com/issues/42
+@oharato, please deal with the task below.
+http://example.com/issues/42
+```
+
+4. pass on a duty to the next member
+```
+> ruboty next
+passed on a duty to the next member. @jimmy is on duty now.
+```
+
+## Notice
+- You should use a ruboty brain plugin such as ruboty-local_yaml and ruboty-redis.
 
 ## Development
 
@@ -30,5 +86,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruboty-slack_take_turns.
+Bug reports and pull requests are welcome on GitHub at https://github.com/oharato/ruboty-slack_take_turns.
 
