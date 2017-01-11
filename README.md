@@ -39,13 +39,13 @@ ruobty /next/ - pass on a duty to the next member
 
 ## Usage
 
-1. check members
+### check members
 ```
 > ruboty members
 oharato, jimmy, ellen, ruboty
 ```
 
-2. set the first person on duty
+### set the first person on duty
 ```
 > ruboty force oharato
 made @oharato to take over a duty
@@ -62,14 +62,14 @@ check current status
 [flag]oharato, jimmy, ellen, ruboty
 ```
 
-3. post a keyword you set in .env
+### post a keyword you set in .env
 ```
 > http://example.com/issues/42
 @oharato, please deal with the task below.
 http://example.com/issues/42
 ```
 
-4. pass on a duty to the next member
+### pass on a duty to the next member
 ```
 > ruboty next
 passed on a duty to the next member. @jimmy is on duty now.
