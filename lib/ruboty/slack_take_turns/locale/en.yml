@@ -6,6 +6,7 @@ en:
       current: show who is on duty currently
       next: pass on a duty to the next member
       exclude: make a specified member to not be on duty after this
+      include: make a specified member to be on duty after this
       assign: When a macthed keyword is posted, the bot assigns a person on duty to a task related the keyword.
     actions:
       assign: |
