@@ -15,7 +15,7 @@ module Ruboty
         private
 
         def current
-          "@#{current_user_name} is on duty now."
+          "#{I18n.t 'messages.actions.current', current_user_name: current_user_name}"
         end
 
       end

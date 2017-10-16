@@ -2,7 +2,7 @@ module Ruboty
   module SlackTakeTurns
     module Actions
       class Base
-        NAMESPACE = 'slack_duty'
+        NAMESPACE = 'slack_take_turns'
 
         attr_reader :message
 
@@ -79,13 +79,13 @@ module Ruboty
 
         class CurrentUserNotFound < ActionBaseError
           def message
-            "not specified who is on duty. use 'force' command"
+            "#{I18n.t 'errors.current_user_not_found'}"
           end
         end
 
         class UserNotFound < ActionBaseError
           def message
-            "#{@user_name} is not found. spelling mistake?"
+            "#{I18n.t 'errors.user_not_found', user_name: @user_name}"
           end
         end
 

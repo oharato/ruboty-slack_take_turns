@@ -18,10 +18,7 @@ module Ruboty
           # avoid self-repeating
           return if message.from_name == message.robot.name
           keyword = message[:keyword]
-          <<~"EOF"
-          @#{current_user_name}, please deal with the task below.
-          #{keyword}
-          EOF
+          "#{I18n.t 'messages.actions.assign', current_user_name: current_user_name, keyword: keyword}"
         end
 
       end

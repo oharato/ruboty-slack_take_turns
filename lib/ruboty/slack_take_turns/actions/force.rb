@@ -19,9 +19,9 @@ module Ruboty
           user_id = find_user_id_by_user_name(user_name)
           if target_user_ids.include? user_id
             channel_data[:current_user_id] = user_id
-            "made @#{user_name} to take over a duty"
+            "#{I18n.t 'messages.actions.force.ok', user_name: user_name}"
           else
-            "#{user_name} is free from a duty"
+            "#{I18n.t 'messages.actions.force.ng', user_name: user_name}"
           end
         end
 

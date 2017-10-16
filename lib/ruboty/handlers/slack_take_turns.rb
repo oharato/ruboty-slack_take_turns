@@ -7,32 +7,37 @@ module Ruboty
       on(
         /members/,
         name: "members",
-        description: "member list in a channel(order by slack-user-id asc)"
+        description: "#{I18n.t 'messages.handlers.members'}"
       )
       on(
         /force (?<user_name>.+?)\z/,
         name: "force",
-        description: "make a specified member to be on duty",
+        description: "#{I18n.t 'messages.handlers.force'}",
       )
       on(
         /current/,
         name: "current",
-        description: "show who is on duty currently",
+        description: "#{I18n.t 'messages.handlers.current'}",
       )
       on(
         /next/,
         name: "next",
-        description: "pass on a duty to the next member",
+        description: "#{I18n.t 'messages.handlers.next'}",
       )
       on(
         /exclude (?<user_name>.+?)\z/,
         name: "exclude",
-        description: "make a specified member to not be on duty after this",
+        description: "#{I18n.t 'messages.handlers.exclude'}",
+      )
+      on(
+        /include (?<user_name>.+?)\z/,
+        name: "include",
+        description: "#{I18n.t 'messages.handlers.include'}",
       )
       on(
         /(?<keyword>#{ENV['ASSIGN_REGEX']})/m,
         name: "assign",
-        description: "When a macthed keyword is posted, the bot assigns a person on duty to a task related the keyword.",
+        description: "#{I18n.t 'messages.handlers.assign'}",
         all: true,
       )
 
@@ -57,6 +62,10 @@ module Ruboty
 
       def exclude(message)
         Ruboty::SlackTakeTurns::Actions::Exclude.new(message).call
+      end
+
+      def include(message)
+        Ruboty::SlackTakeTurns::Actions::Include.new(message).call
       end
 
       def assign(message)

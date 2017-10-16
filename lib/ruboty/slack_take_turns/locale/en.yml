@@ -1,0 +1,23 @@
+en:
+  messages:
+    handlers:
+      members: member list in a channel(order by slack-user-id asc)
+      force: make a specified member to be on duty
+      current: show who is on duty currently
+      next: pass on a duty to the next member
+      exclude: make a specified member to not be on duty after this
+      assign: When a macthed keyword is posted, the bot assigns a person on duty to a task related the keyword.
+    actions:
+      assign: |
+        @%{current_user_name}, please deal with the task below.
+        %{keyword}
+      current: "@%{current_user_name} is on duty now."
+      exclude: made @%{user_name} to not be on duty after this
+      include: made @%{user_name} to be on duty after this
+      force:
+        ok: made @%{user_name} to take over a duty
+        ng: "%{user_name} is free from a duty"
+      next: passed on a duty to the next member. @%{current_user_name} is on duty now.
+  errors:
+    current_user_not_found: not specified who is on duty. use 'force' command
+    user_not_found: "%{user_name} is not found. spelling mistake?"

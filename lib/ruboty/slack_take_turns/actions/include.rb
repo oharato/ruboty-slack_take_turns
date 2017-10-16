@@ -1,9 +1,9 @@
 module Ruboty
   module SlackTakeTurns
     module Actions
-      class Exclude < Base
+      class Include < Base
         def call
-          message.reply(exclude)
+          message.reply(include)
         rescue ActionBaseError => e
           message.reply(e.message)
           Ruboty.logger.info e.to_s
@@ -14,13 +14,13 @@ module Ruboty
 
         private
 
-        def exclude
+        def include
           user_name = message[:user_name]
           user_id = find_user_id_by_user_name(user_name)
-          unless excluded_user_ids.include? user_id
-            excluded_user_ids << user_id
+          if excluded_user_ids.include? user_id
+            excluded_user_ids.delete user_id
           end
-          "#{I18n.t 'messages.actions.exclude', user_name: user_name}"
+          "#{I18n.t 'messages.actions.include', user_name: user_name}"
         end
 
       end

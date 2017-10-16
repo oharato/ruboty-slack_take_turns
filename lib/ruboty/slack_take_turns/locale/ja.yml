@@ -1,0 +1,24 @@
+ja:
+  messages:
+    handlers:
+      members: 当番一覧 (slackユーザIDの昇順)
+      force: 当番を指定します
+      current: 現在の当番を表示します
+      next: 当番をまわします
+      exclude: メンバーを当番から除外します
+      include: メンバーを当番に加えます
+      assign: キーワードが投稿されると、現在の当番にキーワードに関する当番の依頼をします
+    actions:
+      assign: |
+        @%{current_user_name}さん、下記の対応をお願いします。
+        %{keyword}
+      current: "現在の当番は@%{current_user_name}さんです"
+      exclude: "@%{user_name}さんを当番から除外しました"
+      include: "@%{user_name}さんを当番に加えました"
+      force:
+        ok: "@%{user_name}さんを当番にしました"
+        ng: "%{user_name}さんは当番から除外されています"
+      next: 当番をまわしました。現在の当番は@%{current_user_name}さんです
+  errors:
+    current_user_not_found: 当番が指定されていません。'force'コマンドを使ってください
+    user_not_found: "%{user_name}さんが見つかりませんでした。スペルミス？"

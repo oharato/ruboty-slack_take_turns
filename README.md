@@ -26,11 +26,15 @@ Or install it yourself as:
 ```
 SLACK_TOKEN - Browse Apps > Custom Integrations > Bots > API Token
 ASSIGN_REGEX - e.g. .*http:\/\/example.com\/issues.*
+# Default language is English. If you add below, messages is displayed in Japanese.
+SLACK_TAKE_TURNS_LANG=ja
 ```
+
 ## Commands
 ```
 ruobty /current/ - show who is on duty currently
 ruobty /exclude (?<user_name>.+?)\z/ - make a specified member to not be on duty after this
+ruobty /include (?<user_name>.+?)\z/ - make a specified member to be on duty after this
 ruobty /force (?<user_name>.+?)\z/ - make a specified member to be on duty
 ruobty /members/ - member list in a channel(order by slack-user-id asc)
 ruobty /next/ - pass on a duty to the next member

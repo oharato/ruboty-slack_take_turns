@@ -16,7 +16,7 @@ module Ruboty
 
         def _next
           self.current_user_id = find_next
-          "passed on a duty to the next member. @#{current_user_name} is on duty now."
+          "#{I18n.t 'messages.actions.next', current_user_name: current_user_name}"
         end
 
         def find_next
