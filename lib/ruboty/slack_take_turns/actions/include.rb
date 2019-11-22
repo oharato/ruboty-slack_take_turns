@@ -15,7 +15,7 @@ module Ruboty
         private
 
         def include
-          user_names = message[:space_separated_user_names].strip.delete('@').split(/\s*,\s*/)
+          user_names = message[:space_separated_user_names].strip.delete('@').split(/\s|,/).select{|name| !name.empty?}
           included_user_names = []
           user_names.each do |user_name|
             user_id = find_user_id_by_user_name(user_name)
