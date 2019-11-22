@@ -7,6 +7,7 @@ module Ruboty
       def initialize(channel)
         @client ||= Slack::Client.new(token: ENV['SLACK_TOKEN'])
         @channel = channel
+        @channels_info = {}
       end
 
       def all_users
@@ -24,32 +25,32 @@ module Ruboty
       def channel_user_ids
         unless @channel_user_ids&.dig(channel)
           @channel_user_ids = {} unless @channel_user_ids
-          ids = private_channel? ? private_channel_user_ids : public_channel_user_ids
+          ids = private_channel?(channel) ? private_channel_user_ids(channel) : public_channel_user_ids(channel)
+          # 退職してアカウント停止した人とボットは除く
+          ids = ids.select{|id| user = find_user_by_user_id(id); !user['deleted'] && !user['is_bot']}
           @channel_user_ids[channel] = ids.sort
         end
         @channel_user_ids[channel]
       end
 
-      def channels_info
-        @channels_info ||= client.channels_info(channel: channel)
+      def public_channel_user_ids(channel)
+        channel_info = @channels_info[channel]
+        @channels_info[channel] = client.channels_info(channel: channel) unless channel_info
+        @channels_info[channel]['channel']['members']
       end
 
-      def public_channel_user_ids
-        channels_info['channel']['members']
+      def private_channel_user_ids(channel)
+        channel_info = @channels_info[channel]
+        @channels_info[channel] = client.groups_info(channel: channel) unless channel_info
+        @channels_info[channel]['group']['members']
       end
 
-      def private_channel_user_ids
-        private_channels = groups_list
-        current_channel = private_channels.find{|c| c['id'] == channel}
-        current_channel['members']
+      def private_channel?(channel)
+        channel[0] == "G"
       end
 
-      def groups_list
-        @groups_list ||= client.groups_list['groups']
-      end
-
-      def private_channel?
-        channels_info['error'] == "channel_not_found"
+      def find_user_by_user_id(user_id)
+        all_users_hash[user_id] || raise("user not found user_id: #{user_id}#")
       end
 
     end

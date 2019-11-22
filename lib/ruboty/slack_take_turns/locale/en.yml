@@ -13,8 +13,10 @@ en:
         @%{current_user_name}, please deal with the task below.
         %{keyword}
       current: "@%{current_user_name} is on duty now."
-      exclude: made @%{user_name} to not be on duty after this
-      include: made @%{user_name} to be on duty after this
+      exclude: made %{user_name} to not be on duty after this.
+      exclude_failure: Exclude failure. spelling mistake?.
+      include: made %{user_name} to be on duty after this.
+      include_failure: Include failure. spelling mistake?.
       force:
         ok: made @%{user_name} to take over a duty
         ng: "%{user_name} is free from a duty"

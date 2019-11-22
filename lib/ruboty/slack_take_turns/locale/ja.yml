@@ -13,8 +13,10 @@ ja:
         @%{current_user_name}さん、下記の対応をお願いします。
         %{keyword}
       current: "現在の当番は@%{current_user_name}さんです"
-      exclude: "@%{user_name}さんを当番から除外しました"
-      include: "@%{user_name}さんを当番に加えました"
+      exclude: "%{user_name}さんを当番から除外しました"
+      exclude_failure: "当番から除外するのに失敗しました。スペルミス？"
+      include: "%{user_name}さんを当番に加えました"
+      include_failure: "当番に追加するのに失敗しました。スペルミス？"
       force:
         ok: "@%{user_name}さんを当番にしました"
         ng: "%{user_name}さんは当番から除外されています"

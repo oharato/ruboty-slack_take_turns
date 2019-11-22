@@ -25,12 +25,12 @@ module Ruboty
         description: "#{I18n.t 'messages.handlers.next'}",
       )
       on(
-        /exclude (?<user_name>.+?)\z/,
+        /exclude (?<space_separated_user_names>.+?)\z/,
         name: "exclude",
         description: "#{I18n.t 'messages.handlers.exclude'}",
       )
       on(
-        /include (?<user_name>.+?)\z/,
+        /include (?<space_separated_user_names>.+?)\z/,
         name: "include",
         description: "#{I18n.t 'messages.handlers.include'}",
       )

@@ -15,12 +15,17 @@ module Ruboty
         private
 
         def include
-          user_name = message[:user_name]
-          user_id = find_user_id_by_user_name(user_name)
-          if excluded_user_ids.include? user_id
-            excluded_user_ids.delete user_id
+          user_names = message[:space_separated_user_names].strip.delete('@').split(/\s*,\s*/)
+          included_user_names = []
+          user_names.each do |user_name|
+            user_id = find_user_id_by_user_name(user_name)
+            if excluded_user_ids.include? user_id
+              excluded_user_ids.delete user_id
+              included_user_names << user_name
+            end
           end
-          "#{I18n.t 'messages.actions.include', user_name: user_name}"
+          return I18n.t 'messages.actions.include_failure' if included_user_names.empty?
+          "#{I18n.t 'messages.actions.include', user_name: included_user_names.map{|name| "@#{name}"}.join(', ')}"
         end
 
       end
