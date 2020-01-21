@@ -7,7 +7,7 @@ module Ruboty
       def initialize(channel)
         @client ||= Slack::Client.new(token: ENV['SLACK_TOKEN'])
         @channel = channel
-        @channels_info = {}
+        @conversations_members = {}
       end
 
       def all_users
@@ -25,7 +25,7 @@ module Ruboty
       def channel_user_ids
         unless @channel_user_ids&.dig(channel)
           @channel_user_ids = {} unless @channel_user_ids
-          ids = private_channel?(channel) ? private_channel_user_ids(channel) : public_channel_user_ids(channel)
+          ids = conversations_members(channel)
           # 退職してアカウント停止した人とボットは除く
           ids = ids.select{|id| user = find_user_by_user_id(id); !user['deleted'] && !user['is_bot']}
           @channel_user_ids[channel] = ids.sort
@@ -33,20 +33,10 @@ module Ruboty
         @channel_user_ids[channel]
       end
 
-      def public_channel_user_ids(channel)
-        channel_info = @channels_info[channel]
-        @channels_info[channel] = client.channels_info(channel: channel) unless channel_info
-        @channels_info[channel]['channel']['members']
-      end
-
-      def private_channel_user_ids(channel)
-        channel_info = @channels_info[channel]
-        @channels_info[channel] = client.groups_info(channel: channel) unless channel_info
-        @channels_info[channel]['group']['members']
-      end
-
-      def private_channel?(channel)
-        channel[0] == "G"
+      def conversations_members(channel)
+        members = @conversations_members[channel]
+        @conversations_members[channel] = client.conversations_members(channel: channel)['members'] unless members
+        @conversations_members[channel]
       end
 
       def find_user_by_user_id(user_id)
