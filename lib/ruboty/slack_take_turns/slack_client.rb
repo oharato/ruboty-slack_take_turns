@@ -1,3 +1,5 @@
+require "slack-ruby-client"
+
 module Ruboty
   module SlackTakeTurns
     class SlackClient
@@ -5,7 +7,7 @@ module Ruboty
       attr_reader :client, :channel
 
       def initialize(channel)
-        @client ||= Slack::Client.new(token: ENV['SLACK_TOKEN'])
+        @client ||= Slack::Web::Client.new(token: ENV['SLACK_TOKEN'])
         @channel = channel
         @conversations_members = {}
       end
